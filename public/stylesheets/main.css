@@ -17,3 +17,8 @@
 .delete-form {
     display: inline;
 }
+
+.form-control {
+    white-space: pre-line;
+    white-space: pre-wrap;
+}

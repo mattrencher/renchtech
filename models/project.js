@@ -4,6 +4,7 @@ var projectSchema = new mongoose.Schema({
    name: String,
    image: String,
    description: String,
+   video: String,
    createdAt: { type: Date, default: Date.now },
    author: {
       id: {

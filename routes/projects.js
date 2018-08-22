@@ -22,11 +22,12 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
+    var vid = req.body.video;
     var author ={
         id: req.user._id,
         username: req.user.username
     }
-    var newProject = {name: name, image: image, description: desc, author: author};  // save form inputs to new object
+    var newProject = {name: name, image: image, description: desc, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
     Project.create(newProject, function(err, newlyCreated){
         if(err){

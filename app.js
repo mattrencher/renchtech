@@ -16,7 +16,9 @@ var commentRoutes = require("./routes/comments"),
     projectRoutes = require("./routes/projects"),
     indexRoutes = require("./routes/index");
 
-mongoose.connect("mongodb://localhost:27017/renchtech01");
+// mongoose.connect("mongodb://localhost:27017/renchtech01");
+var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech"
+mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");   // allows ejs files to remove suffix

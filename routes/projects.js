@@ -63,7 +63,7 @@ router.get("/:id", function(req, res){
     // res.render("show");
 });
 
-// EDIT CAMPGROUND ROUTE
+// EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
     Project.findById(req.params.id, function(err, foundProject){
         res.render("projects/edit", {project: foundProject});
@@ -72,7 +72,7 @@ router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
 });
 
 
-// UPDATE CAMPGROUND ROUTE
+// UPDATE PROJECT ROUTE
 router.put("/:id", middleware.checkProjectOwnership, function(req,res){
     // find and update the correct project
     Project.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
@@ -85,7 +85,7 @@ router.put("/:id", middleware.checkProjectOwnership, function(req,res){
     // redirect somewhere (show page)
 });
 
-// DESTORY CAMPGROUND ROUTE
+// DESTORY PROJECT ROUTE
 router.delete("/:id", middleware.checkProjectOwnership, function(req, res){
     Project.findByIdAndRemove(req.params.id, function(err){
         if(err){

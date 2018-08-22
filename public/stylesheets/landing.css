@@ -3,7 +3,7 @@ body {
   background-color: #000;
 }
 
-/*Now we need to position the welcome text and view all campgrounds buton:*/
+/*Now we need to position the welcome text and view all projects buton:*/
 #landing-header {
   z-index: 1;
   position: relative;

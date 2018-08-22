@@ -21,4 +21,4 @@ var projectSchema = new mongoose.Schema({
    ]
 });
 
-module.exports = mongoose.model("Campground", projectSchema);
+module.exports = mongoose.model("Project", projectSchema);

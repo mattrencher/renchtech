@@ -43,22 +43,22 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(/landing/img2.jpg) 
+  background-image: url(/landing/img01.jpg) 
 }
 .slideshow li:nth-child(2) { 
-  background-image: url(/landing/img1.jpg);
+  background-image: url(/landing/img02.jpg);
   animation-delay: 10s; 
 }
 .slideshow li:nth-child(3) { 
-  background-image: url(/landing/img4.jpg);
+  background-image: url(/landing/img04.jpg);
   animation-delay: 20s; 
 }
 .slideshow li:nth-child(4) { 
-  background-image: url(/landing/img3.jpg);
+  background-image: url(/landing/img03.jpg);
   animation-delay: 30s; 
 }
 .slideshow li:nth-child(5) { 
-  background-image: url(/landing/img5.jpg);
+  background-image: url(/landing/img05.jpg);
   animation-delay: 40s; 
 }
 

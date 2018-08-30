@@ -11,9 +11,12 @@ var express     = require("express"),
     User        = require("./models/user"),
     seedDB      = require("./seeds")
 
+app.locals.moment = require('moment');
+
 // requiring routes
 var commentRoutes = require("./routes/comments"),
     projectRoutes = require("./routes/projects"),
+    myProjectRoutes = require("./routes/myprojects"),
     indexRoutes = require("./routes/index");
 
 // mongoose.connect("mongodb://localhost:27017/renchtech01");
@@ -52,6 +55,7 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/projects", projectRoutes);
 app.use("/projects/:id/comments", projectRoutes);
+app.use("/myprojects", myProjectRoutes);
     
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log(("RenchTech has started!!"));

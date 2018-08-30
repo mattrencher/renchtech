@@ -1,11 +1,10 @@
 <% include ../partials/header %>
 
-
 		<header class="jumbotron">
 			<div class="container">
 				<!--<h1><span class="glyphicon glyphicon-wrench"></span> Welcome to the RenchTech</h1>-->
-				<h1><img src="/media/renchtech_logo_solo_001.png" width="10%" height="10%"> Welcome to RenchTech Projects Hub</h1>
-				<p>View some of our current works featuring Arduino, Digispark, Raspberry Pi, and Javascript</p>
+				<h1><img src="/media/renchtech_logo_solo_001.png" width="10%" height="10%"> Project Hub</h1>
+				<p>Check out the Project Hub, a collection of projects from our users!</p>
 				<p>
 					<a class="btn btn-primary btn-lg" href="/projects/new">Add New Project</a>
 				</p>
@@ -28,10 +27,8 @@
 							<a href="/projects/<%= project._id %>" class="btn btn-primary">More Info</a>
 						</p>
 					</div>
-					
 				</div>
 			<% }); %>
-			
 		</div>
 
 <% include ../partials/footer %>

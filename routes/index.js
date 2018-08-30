@@ -3,7 +3,6 @@ var router = express.Router();
 var passport    = require("passport");
 var User = require("../models/user");
 
-
 // Root Route
 router.get("/", function(req, res){
     res.render("landing");
@@ -21,6 +20,7 @@ router.get("/register", function(req, res){
 // Handle sign up logic
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
+
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             return res.render("register", {"error": err.message});

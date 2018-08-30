@@ -12,7 +12,7 @@ middlewareObj.checkProjectOwnership = function(req, res, next){
         req.flash("error", "Project not found");
         res.redirect("back");
       } else {
-        if(foundProject.author.id.equals(req.user._id)){
+        if(foundProject.author.id.equals(req.user._id) || req.user.isAdmin){
           next();
         } else {
           req.flash("error", "You don't have permission to do that")

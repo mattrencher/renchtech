@@ -12,12 +12,12 @@
     <!--</div>-->
     <div class="col-md-12">
       <div class="thumbnail">
-        <h4><a><%=project.name%></a></h4>
+        <h4><a><%=project.title%></a></h4>
         <img class="img-responsive" src="<%= project.image %>">
         <div class="caption-full">
-          <!--<h4><a><%=project.name%></a></h4>-->
+          <!--<h4><a><%=project.title%></a></h4>-->
           <br>
-          <p><%= project.description %></p>
+          <p><%= project.body %></p>
           <br>
           <!--<p><iframe width="560" height="315" src="https://www.youtube.com/embed/Asgdg3nJt58" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>-->
           <p><iframe width="560" height="315" src="<%=project.video%>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>

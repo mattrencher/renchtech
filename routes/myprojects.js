@@ -21,7 +21,7 @@ router.post("/", middleware.isAdmin, function(req, res){
     // get data from form and add to projects array
     var title = req.body.title;
     var image = req.body.image;
-    var body = req.body.description;
+    var body = req.body.body;
     var vid = req.body.video;
     var author ={
         id: req.user._id,
@@ -46,7 +46,7 @@ router.get("/new", middleware.isAdmin, function(req, res){
 });
 
 // SHOW - shows more info about one project
-router.get("/:id", middleware.isAdmin, function(req, res){
+router.get("/:id", function(req, res){
     // find the project with provided ID
     Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
         if(err || !foundProject){

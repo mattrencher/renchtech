@@ -65,11 +65,22 @@ router.get("/:id", function(req, res){
 });
 
 // EDIT PROJECT ROUTE
-router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
-    Project.findById(req.params.id, function(err, foundProject){
-        res.render("projects/edit", {project: foundProject});
-    });
+// router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
+//     Project.findById(req.params.id, function(err, foundProject){
+//         res.render("projects/edit", {project: foundProject});
+//     });
 
+// });
+router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
+    //find the campground with provided ID
+    Project.findById(req.params.id, function(err, foundProject){
+        if(err){
+            console.log(err);
+        } else {
+            //render show template with that campground
+            res.render("projects/edit", {project: foundProject});
+        }
+    });
 });
 
 

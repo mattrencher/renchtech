@@ -1,5 +1,6 @@
 // all the middlware goes here
 var Project = require("../models/project");
+var Blog = require("../models/blog");
 var Comment = require("../models/comment");
 var middlewareObj = {};
 

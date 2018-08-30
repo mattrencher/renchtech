@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+
+  <div class="row">
+    <h1 style="text-align: center;">Create a New Blog</h1>
+    <div style="width: 30%; margin: 25px auto;">
+      <form action="/myprojects" method="POST">
+        <div class="form-group">
+          <input class="form-control" type="text" name="title" placeholder="Title">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" name="image" placeholder="Image url">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" name="body" placeholder="Body" rows="8"></textarea>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" name="video" placeholder="Youtube Link">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-default btn-block btn-primary">Submit!</button>
+        </div>
+      </form>
+      <a href="/myprojects">Go Back</a>
+    </div>
+  </div>
+
+<% include ../partials/footer %>

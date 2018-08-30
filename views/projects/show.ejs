@@ -22,7 +22,7 @@
           <!--<p><iframe width="560" height="315" src="https://www.youtube.com/embed/Asgdg3nJt58" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>-->
           <p><iframe width="560" height="315" src="<%=project.video%>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
           <p>
-            <em>Submitted by: <%= project.author.username %>, <%= moment(project.createdAt).fromNow() %></em>
+            <em>Submitted by: <a href="/users/<%= project.author.id %>"><%= project.author.username %></a>, <%= moment(project.createdAt).fromNow() %></em>
           </p>
           <% if(currentUser && project.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
             <a class="btn btn-xs btn-warning" href="/projects/<%= project._id %>/edit">Edit</a>

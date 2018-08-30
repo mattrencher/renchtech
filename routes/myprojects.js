@@ -16,7 +16,7 @@ router.get("/", function(req, res){
 });
 
 // CREATE - add new project to DB
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isAdmin, function(req, res){
     // res.send("You hit the post route")
     // get data from form and add to projects array
     var title = req.body.title;
@@ -41,12 +41,12 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 // NEW- show form to create new project
-router.get("/new", middleware.isLoggedIn, function(req, res){
+router.get("/new", middleware.isAdmin, function(req, res){
     res.render("myprojects/new");
 });
 
 // SHOW - shows more info about one project
-router.get("/:id", function(req, res){
+router.get("/:id", middleware.isAdmin, function(req, res){
     // find the project with provided ID
     Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
         if(err || !foundProject){

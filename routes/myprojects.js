@@ -54,7 +54,7 @@ router.get("/:id", function(req, res){
             req.flash("error", "Project not found");
             res.redirect("back");
         } else {
-            console.log(foundProject);
+            //console.log(foundProject);
             // render show template with that project
             res.render("myprojects/show", {project: foundProject});
         }
@@ -62,6 +62,43 @@ router.get("/:id", function(req, res){
     // render show template with that project
     // res.send("This will be the show page one day...")
     // res.render("show");
+});
+
+// EDIT PROJECT ROUTE
+router.get("/:id/edit", middleware.isAdmin, function(req, res){
+    //find the campground with provided ID
+    Blog.findById(req.params.id, function(err, foundProject){
+        if(err){
+            console.log(err);
+        } else {
+            //render show template with that campground
+            res.render("myprojects/edit", {project: foundProject});
+        }
+    });
+});
+
+// UPDATE PROJECT ROUTE
+router.put("/:id", middleware.isAdmin, function(req,res){
+    // find and update the correct project
+    Blog.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
+        if(err){
+            res.redirect("/myprojects");
+        } else {
+            res.redirect("/myprojects/" + req.params.id);
+        }
+    });
+    // redirect somewhere (show page)
+});
+
+// DESTORY PROJECT ROUTE
+router.delete("/:id", middleware.isAdmin, function(req, res){
+    Blog.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect("/myprojects");
+        } else {
+            res.redirect("/myprojects");
+        }
+    });
 });
 
 module.exports = router;

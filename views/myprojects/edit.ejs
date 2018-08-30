@@ -3,7 +3,7 @@
   <div class="row">
     <h1 style="text-align: center;">Edit <%= project.name %> project</h1>
     <div style="width: 30%; margin: 25px auto;">
-      <form action="/projects/<%= project._id %>?_method=PUT" method="POST">
+      <form action="/myprojects/<%= project._id %>?_method=PUT" method="POST">
         <div class="form-group">
           <input class="form-control" type="text" name="project[title]" value="<%= project.title %>">
         </div>
@@ -20,7 +20,7 @@
           <button class="btn btn-lg btn-default btn-block btn-primary">Submit!</button>
         </div>
       </form>
-      <a href="/projects">Go Back</a>
+      <a href="/myprojects">Go Back</a>
     </div>
   </div>
 

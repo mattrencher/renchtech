@@ -9,7 +9,8 @@ var express     = require("express"),
     Project  = require("./models/project"),
     Comment     = require("./models/comment"),
     User        = require("./models/user"),
-    seedDB      = require("./seeds")
+    seedDB      = require("./seeds"),
+    expressSanitizer = require('express-sanitizer');
 
 app.locals.moment = require('moment');
 
@@ -19,8 +20,7 @@ var commentRoutes = require("./routes/comments"),
     myProjectRoutes = require("./routes/myprojects"),
     indexRoutes = require("./routes/index");
 
-// mongoose.connect("mongodb://localhost:27017/renchtech01");
-var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech"
+var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech";
 mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -30,6 +30,7 @@ app.use(methodOverride("_method"));
 app.use(flash());
 // seedDB(); // seed the database
 app.locals.moment = require('moment');
+app.use(expressSanitizer());
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -50,11 +51,9 @@ app.use(function(req, res, next){
     next();
 })
 
-
-
 app.use("/", indexRoutes);
 app.use("/projects", projectRoutes);
-app.use("/projects/:id/comments", projectRoutes);
+app.use("/projects/:id/comments", commentRoutes);
 app.use("/myprojects", myProjectRoutes);
     
 app.listen(process.env.PORT, process.env.IP, function(){

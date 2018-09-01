@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport    = require("passport");
 var User = require("../models/user");
-var Project = require("../models/project")
+var Project = require("../models/project");
 
 // Root Route
 router.get("/", function(req, res){
@@ -28,10 +28,6 @@ router.post("/register", function(req, res){
         email: req.body.email,
         avatar: req.body.avatar
       });
-    // eval(require('locus'));
-    //  if(req.body.adminCode === 'secretcode123') {
-    //   newUser.isAdmin = true;
-    // }
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log(err);
@@ -39,7 +35,7 @@ router.post("/register", function(req, res){
         }
         passport.authenticate("local")(req, res, function(){
             req.flash("success", "Successfully signed up! Nice to meet you " + user.username);
-            res.redirect("/projects");
+            res.redirect("/myprojects");
         });
     });
 });
@@ -79,15 +75,7 @@ router.get("/users/:id", function(req, res){
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "Logged You Out");
-   res.redirect("/projects");
+   res.redirect("/myprojects");
 });
-
-// Middleware
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;

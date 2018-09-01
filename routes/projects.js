@@ -22,7 +22,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
-    var vid = req.body.video;
+    var vid = req.body.video.replace("watch?v=", "embed/");
     var author ={
         id: req.user._id,
         username: req.user.username
@@ -59,19 +59,16 @@ router.get("/:id", function(req, res){
             res.render("projects/show", {project: foundProject});
         }
     });
-    // render show template with that project
-    // res.send("This will be the show page one day...")
-    // res.render("show");
 });
 
 // EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
-    //find the campground with provided ID
+    //find the project with provided ID
     Project.findById(req.params.id, function(err, foundProject){
         if(err){
             console.log(err);
         } else {
-            //render show template with that campground
+            //render show template with that project
             res.render("projects/edit", {project: foundProject});
         }
     });
@@ -80,6 +77,7 @@ router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
 // UPDATE PROJECT ROUTE
 router.put("/:id", middleware.checkProjectOwnership, function(req,res){
     // find and update the correct project
+    // req.body.sanitized = req.sanitize(req.body.propertyToSanitize);
     Project.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
         if(err){
             res.redirect("/projects");

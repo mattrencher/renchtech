@@ -54,18 +54,11 @@ middlewareObj.isLoggedIn = function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    // add flash ""
     req.flash("error", "You need to be logged in to do that");
     res.redirect("/login");
 }
 
 middlewareObj.isAdmin = function isAdmin(req, res, next){
-  // if(req.user.isAdmin){
-  //   next();
-  //   } else {
-  //     req.flash("error", "You don't have permission to do that")
-  //     res.redirect("back");
-  // }
   if(req.isAuthenticated() && req.user.isAdmin){
     return next();
   } else {

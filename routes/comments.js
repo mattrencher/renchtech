@@ -19,7 +19,6 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
             res.render("comments/new", {project: project});
         }
     })
-    
 });
 
 // Comments Create

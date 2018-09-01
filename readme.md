@@ -18,3 +18,5 @@ Added Time created w Moment JS
 Admin Role
 User profiles
 My Projects Directory
+Edit/Delete acces for Admin on Blog/Myprojects
+

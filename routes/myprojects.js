@@ -66,12 +66,12 @@ router.get("/:id", function(req, res){
 
 // EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.isAdmin, function(req, res){
-    //find the campground with provided ID
+    //find the project with provided ID
     Blog.findById(req.params.id, function(err, foundProject){
         if(err){
             console.log(err);
         } else {
-            //render show template with that campground
+            //render show template with that project
             res.render("myprojects/edit", {project: foundProject});
         }
     });

@@ -49,17 +49,17 @@ body {
 
 
 
-/*.thumbnail img {*/
-/*  width: 100%;*/
-/*}*/
+.thumbnail img {
+  width: 100%;
+}
 
-/*.thumbnail {*/
-/*  padding: 0px;*/
-/*}*/
+.thumbnail {
+  padding: 0px;
+}
 
-/*.thumbnail .caption {*/
-/*  padding: 9px;*/
-/*}*/
+.thumbnail .caption {
+  padding: 9px;
+}
 
 .caption-full {
   padding: 5px;

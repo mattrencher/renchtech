@@ -26,7 +26,7 @@ router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
 });
 
 // Keypad
-router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
+router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
   res.render("myprojects/keypad"); 
 });
 

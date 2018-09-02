@@ -25,6 +25,11 @@ router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
   res.render("myprojects/ethernet"); 
 });
 
+// Keypad
+router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
+  res.render("myprojects/keypad"); 
+});
+
 // CREATE - add new project to DB
 router.post("/", middleware.isAdmin, function(req, res){
     // res.send("You hit the post route")
@@ -110,7 +115,5 @@ router.delete("/:id", middleware.isAdmin, function(req, res){
         }
     });
 });
-
-
 
 module.exports = router;

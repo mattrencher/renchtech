@@ -15,6 +15,18 @@ router.get("/", function(req, res){
     });
 });
 
+// The Automated Patriot
+router.get("/5b87762aa0333f00142fe4bf", function(req, res){
+    res.render("myprojects/patriot");
+});
+
+// Recycling Ethernet Cables
+router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
+   res.render("myprojects/ethernet"); 
+});
+
+
+
 // CREATE - add new project to DB
 router.post("/", middleware.isAdmin, function(req, res){
     // res.send("You hit the post route")
@@ -100,5 +112,7 @@ router.delete("/:id", middleware.isAdmin, function(req, res){
         }
     });
 });
+
+
 
 module.exports = router;

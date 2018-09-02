@@ -22,10 +22,8 @@ router.get("/5b87762aa0333f00142fe4bf", function(req, res){
 
 // Recycling Ethernet Cables
 router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
-   res.render("myprojects/ethernet"); 
+  res.render("myprojects/ethernet"); 
 });
-
-
 
 // CREATE - add new project to DB
 router.post("/", middleware.isAdmin, function(req, res){
@@ -58,23 +56,23 @@ router.get("/new", middleware.isAdmin, function(req, res){
 });
 
 // SHOW - shows more info about one project
-router.get("/:id", function(req, res){
-    // find the project with provided ID
-    Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
-        if(err || !foundProject){
-            console.log(err);
-            req.flash("error", "Project not found");
-            res.redirect("back");
-        } else {
-            //console.log(foundProject);
-            // render show template with that project
-            res.render("myprojects/show", {project: foundProject});
-        }
-    });
-    // render show template with that project
-    // res.send("This will be the show page one day...")
-    // res.render("show");
-});
+// router.get("/:id", function(req, res){
+//     // find the project with provided ID
+//     Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
+//         if(err || !foundProject){
+//             console.log(err);
+//             req.flash("error", "Project not found");
+//             res.redirect("back");
+//         } else {
+//             //console.log(foundProject);
+//             // render show template with that project
+//             res.render("myprojects/show", {project: foundProject});
+//         }
+//     });
+//     // render show template with that project
+//     // res.send("This will be the show page one day...")
+//     // res.render("show");
+// });
 
 // EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.isAdmin, function(req, res){

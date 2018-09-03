@@ -16,8 +16,8 @@ app.locals.moment = require('moment');
 
 // requiring routes
 var commentRoutes = require("./routes/comments"),
+    communityRoutes = require("./routes/community"),
     projectRoutes = require("./routes/projects"),
-    myProjectRoutes = require("./routes/myprojects"),
     indexRoutes = require("./routes/index");
 
 var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech";
@@ -53,8 +53,9 @@ app.use(function(req, res, next){
 
 app.use("/", indexRoutes);
 app.use("/projects", projectRoutes);
-app.use("/projects/:id/comments", commentRoutes);
-app.use("/myprojects", myProjectRoutes);
+app.use("/community", communityRoutes);
+app.use("/community/:id/comments", commentRoutes);
+
     
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log(("RenchTech has started!!"));

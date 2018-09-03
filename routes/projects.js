@@ -1,12 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var Project = require("../models/project");
+var Blog = require("../models/blog");
 var middleware = require("../middleware");
 
 // // INDEX - show all projects
 router.get("/", function(req, res){
     // Get all projects from DB
-    Project.find({}, function(err, allProjects){
+    Blog.find({}, function(err, allProjects){
         if(err){
             console.log(err);
         } else {
@@ -15,21 +15,36 @@ router.get("/", function(req, res){
     });
 });
 
+// The Automated Patriot
+router.get("/5b87762aa0333f00142fe4bf", function(req, res){
+    res.render("projects/patriot");
+});
+
+// Recycling Ethernet Cables
+router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
+  res.render("projects/ethernet"); 
+});
+
+// Keypad
+router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
+  res.render("projects/keypad"); 
+});
+
 // CREATE - add new project to DB
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isAdmin, function(req, res){
     // res.send("You hit the post route")
     // get data from form and add to projects array
-    var name = req.body.name;
+    var title = req.body.title;
     var image = req.body.image;
-    var desc = req.body.description;
-    var vid = req.body.video.replace("watch?v=", "embed/");
+    var body = req.body.body;
+    var vid = req.body.video;
     var author ={
         id: req.user._id,
         username: req.user.username
     }
-    var newProject = {name: name, image: image, description: desc, video: vid, author: author};  // save form inputs to new object
+    var newProject = {title: title, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
-    Project.create(newProject, function(err, newlyCreated){
+    Blog.create(newProject, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
@@ -41,30 +56,33 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 // NEW- show form to create new project
-router.get("/new", middleware.isLoggedIn, function(req, res){
+router.get("/new", middleware.isAdmin, function(req, res){
     res.render("projects/new");
 });
 
 // SHOW - shows more info about one project
-router.get("/:id", function(req, res){
-    // find the project with provided ID
-    Project.findById(req.params.id).populate("comments").exec(function(err, foundProject){
-        if(err || !foundProject){
-            console.log(err);
-            req.flash("error", "Project not found");
-            res.redirect("back");
-        } else {
-            console.log(foundProject);
-            // render show template with that project
-            res.render("projects/show", {project: foundProject});
-        }
-    });
-});
+// router.get("/:id", function(req, res){
+//     // find the project with provided ID
+//     Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
+//         if(err || !foundProject){
+//             console.log(err);
+//             req.flash("error", "Project not found");
+//             res.redirect("back");
+//         } else {
+//             //console.log(foundProject);
+//             // render show template with that project
+//             res.render("projects/show", {project: foundProject});
+//         }
+//     });
+//     // render show template with that project
+//     // res.send("This will be the show page one day...")
+//     // res.render("show");
+// });
 
 // EDIT PROJECT ROUTE
-router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
+router.get("/:id/edit", middleware.isAdmin, function(req, res){
     //find the project with provided ID
-    Project.findById(req.params.id, function(err, foundProject){
+    Blog.findById(req.params.id, function(err, foundProject){
         if(err){
             console.log(err);
         } else {
@@ -75,10 +93,9 @@ router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
 });
 
 // UPDATE PROJECT ROUTE
-router.put("/:id", middleware.checkProjectOwnership, function(req,res){
+router.put("/:id", middleware.isAdmin, function(req,res){
     // find and update the correct project
-    // req.body.sanitized = req.sanitize(req.body.propertyToSanitize);
-    Project.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
+    Blog.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
         if(err){
             res.redirect("/projects");
         } else {
@@ -89,8 +106,8 @@ router.put("/:id", middleware.checkProjectOwnership, function(req,res){
 });
 
 // DESTORY PROJECT ROUTE
-router.delete("/:id", middleware.checkProjectOwnership, function(req, res){
-    Project.findByIdAndRemove(req.params.id, function(err){
+router.delete("/:id", middleware.isAdmin, function(req, res){
+    Blog.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect("/projects");
         } else {

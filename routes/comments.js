@@ -27,7 +27,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
    Project.findById(req.params.id, function(err, project){
        if(err){
            console.log(err);
-           res.redirect("/projects");
+           res.redirect("/community");
        } else {
         Comment.create(req.body.comment, function(err, comment){
            if(err){
@@ -44,7 +44,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
               project.save();
               console.log(comment);
               req.flash("success", "Successfully added comment");
-              res.redirect('/projects/' + project._id);
+              res.redirect('/community/' + project._id);
            }
         });
        }
@@ -75,7 +75,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req,res){
     if(err){
       res.redirect("back");
     } else {
-      res.redirect("/projects/" + req.params.id);
+      res.redirect("/community/" + req.params.id);
     }
   });
 });
@@ -87,7 +87,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req,res
       res.redirect("back");
     } else {
       req.flash("success", "Comment deleted");
-      res.redirect("/projects/" + req.params.id);
+      res.redirect("/community/" + req.params.id);
     }
   });
   

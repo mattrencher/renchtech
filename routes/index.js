@@ -35,7 +35,7 @@ router.post("/register", function(req, res){
         }
         passport.authenticate("local")(req, res, function(){
             req.flash("success", "Successfully signed up! Nice to meet you " + user.username);
-            res.redirect("/myprojects");
+            res.redirect("/community");
         });
     });
 });
@@ -48,7 +48,7 @@ router.get("/login", function(req, res){
 // Handling login logic
 router.post("/login", passport.authenticate("local",
     {
-        successRedirect: "/projects",
+        successRedirect: "/community",
         failureRedirect: "/login"
     }), function(req, res) {
 });
@@ -75,7 +75,7 @@ router.get("/users/:id", function(req, res){
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "Logged You Out");
-   res.redirect("/myprojects");
+   res.redirect("/community");
 });
 
 module.exports = router;

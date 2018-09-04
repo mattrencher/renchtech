@@ -20,6 +20,11 @@ body {
   /*margin-bottom: 60px;*/
 }
 
+div.caption.center-block {
+  font-size: .8em;
+  padding: 0;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -46,24 +51,6 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}
-
-
-
-.thumbnail img {
-  width: 100%;
-}
-
-.thumbnail {
-  padding: 0px;
-}
-
-.thumbnail .caption {
-  padding: 9px;
-}
-
-.caption-full {
-  padding: 5px;
 }
 
 .delete-form {

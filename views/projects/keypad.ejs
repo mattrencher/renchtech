@@ -21,16 +21,26 @@
           <p class="text-left">
             This number pad was made for Apple computers in the late 80’s, it uses 2 ADB connectors which were used in primarily in Apple devices. The key switches are mechanical Alps keys, these feel very smooth and have a nice tactile snap. This is not OEM Apple hardware, but still has a very solid build. The only thing I wish it came with was a coiled ADB cable that many computer devices in the late-80s had.
           </p>
+          <div class="text-center">
+            <img src="https://i.imgur.com/KQM2Tqk.jpg" class="img-fluid" style="width:100%;max-width:500px">
+          </div>
           <p class="text-left">
-            To adapt this keypad to work with modern computers I first researched how to convert ADB signals with Arduino libraries. There wasn’t a ton of resources I could find on this, and it looked like it didn’t always work across PC/Mac platforms, so I decided to bypass the onboard IC and solder directly to the keyswitches.
+            To adapt this keypad to work with modern computers I first searched for Arduino libraries that handled ADB signals. There wasn’t a ton of resources I could find on this, and results varied between PC, Mac, and Linux platforms, so I decided to bypass the onboard IC and solder directly to the keyswitches.
           </p>
-          <img src="https://i.imgur.com/KQM2Tqk.jpg">
+          <div class="text-center">
+            <div class="caption center-block">Input pin and button reference for both modes</div>
+            <img src="https://i.imgur.com/zjAMdC0.jpg?1" class="img-fluid" style="width:100%;max-width:500px">
+          </div>
           <p class="text-left">
               I reprogrammed the keys by creating a keypad matrix connected to my Arduino Leonardo.
               A keypad matrix works by assigning and connecting the columns and rows to I/O pins.
               Each key uses two pins, one connected to the row pin, and one connected to the column pin
               By making 6 rows, and 4 columns (6x4=24 keys; needs 22 keys) I was able to create a matrix of all the buttons, using the <a href=”https://playground.arduino.cc/code/keypad”>Keypad library</a> these can all be read as individual keys, even allowing multiple keys to be pressed simultaneously.
           </p>
+          
+          <div class="text-center">
+            <img src="https://i.imgur.com/ivFcvqk.jpg" class="img-fluid" style="width:100%;max-width:500px">
+          </div>
         </p>
 
         <div class="float-right">

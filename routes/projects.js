@@ -16,8 +16,35 @@ router.get("/", function(req, res){
 });
 
 // The Automated Patriot
-router.get("/5b87762aa0333f00142fe4bf", function(req, res){
-    res.render("projects/patriot");
+// router.get("/5b87762aa0333f00142fe4bf", function(req, res){
+//         // Get all projects from DB
+//     Blog.find({}, function(err, allProjects){
+//         if(err){
+//             console.log(err);
+//         } else {
+//             res.render("projects/patriot",{projects:allProjects, currentUser: req.user, page: 'patriot'});
+//         }
+//     });
+    
+//     // res.render("projects/patriot");
+// });
+
+router.get("/:id", function(req, res){
+    // find the project with provided ID
+    Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
+        if(err || !foundProject){
+            console.log(err);
+            req.flash("error", "Project not found");
+            res.redirect("back");
+        } else {
+            //console.log(foundProject);
+            // render show template with that project
+            res.render("projects/patriot", {project: foundProject});
+        }
+    });
+    // render show template with that project
+    // res.send("This will be the show page one day...")
+    // res.render("show");
 });
 
 // Recycling Ethernet Cables
@@ -34,7 +61,7 @@ router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
 router.post("/", middleware.isAdmin, function(req, res){
     // res.send("You hit the post route")
     // get data from form and add to projects array
-    var title = req.body.title;
+    var name = req.body.name;
     var image = req.body.image;
     var body = req.body.body;
     var vid = req.body.video;
@@ -42,7 +69,7 @@ router.post("/", middleware.isAdmin, function(req, res){
         id: req.user._id,
         username: req.user.username
     }
-    var newProject = {title: title, image: image, body: body, video: vid, author: author};  // save form inputs to new object
+    var newProject = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
     Blog.create(newProject, function(err, newlyCreated){
         if(err){

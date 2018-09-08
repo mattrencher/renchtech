@@ -69,6 +69,11 @@ router.get("/users/:id", function(req, res){
   });
 });
 
+// Resume
+router.get("/resume", function(req, res){
+  res.render("info/resume",{currentUser: req.user, page: 'resume'});
+});
+
 
 // Logout Route
 router.get("/logout", function(req, res){

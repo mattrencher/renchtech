@@ -34,7 +34,7 @@ app.use(expressSanitizer());
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "Ichiban number 1",
     resave: false,
     saveUninitialized: false
 }));

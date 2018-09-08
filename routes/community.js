@@ -17,12 +17,11 @@ router.get("/", function(req, res){
 
 // CREATE - add new project to DB
 router.post("/", middleware.isLoggedIn, function(req, res){
-    // res.send("You hit the post route")
-    // get data from form and add to projects array
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var vid = req.body.video.replace("watch?v=", "embed/");
+    var name = req.sanitize(req.body.project.name);
+    var image = req.sanitize(req.body.project.image);
+    var desc = req.sanitize(req.body.project.description);
+    var video = req.sanitize(req.body.project.video);
+    var vid = video.replace("watch?v=", "embed/");
     var author ={
         id: req.user._id,
         username: req.user.username
@@ -77,15 +76,20 @@ router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
 // UPDATE PROJECT ROUTE
 router.put("/:id", middleware.checkProjectOwnership, function(req,res){
     // find and update the correct project
-    // req.body.sanitized = req.sanitize(req.body.propertyToSanitize);
-    Project.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
+    var name = req.sanitize(req.body.project.name);
+    var image = req.sanitize(req.body.project.image);
+    var desc = req.sanitize(req.body.project.description);
+    var video = req.sanitize(req.body.project.video);
+    var vid = video.replace("watch?v=", "embed/");
+    var newProject = {name: name, image: image, description: desc, video: vid};  // save form inputs to new object
+    // req.body.project.body = req.sanitize(req.body.project.body);
+    Project.findByIdAndUpdate(req.params.id, newProject, function(err, updatedProject){
         if(err){
             res.redirect("/community");
         } else {
             res.redirect("/community/" + req.params.id);
         }
     });
-    // redirect somewhere (show page)
 });
 
 // DESTORY PROJECT ROUTE

@@ -54,8 +54,6 @@ router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
 
 // CREATE - add new project to DB
 router.post("/", middleware.isAdmin, function(req, res){
-    // res.send("You hit the post route")
-    // get data from form and add to projects array
     var name = req.body.name;
     var image = req.body.image;
     var body = req.body.body;
@@ -66,7 +64,8 @@ router.post("/", middleware.isAdmin, function(req, res){
     }
     var newProject = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
-    Blog.create(newProject, function(err, newlyCreated){
+    var cleanProject = req.sanitize(newProject);
+    Blog.create(cleanProject, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {

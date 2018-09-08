@@ -7,44 +7,42 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
     </head>
     <body>
-    
-    <div class="container">
-        <% if(error && error.length > 0){ %>
-            <div class="alert alert-danger" role="alert">
-                <%= error %>
-            </div>
-        <% } %>
-        <% if(success && success.length > 0){ %>
-            <div class="alert alert-success" role="alert">
-                <%= success %>
-            </div>
-        <% } %>
+    <div class="col-md-12 text-center">
+        <!--Alert Dialog-->
+        <div class="container">
+            <% if(error && error.length > 0){ %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
+            <% if(success && success.length > 0){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
+            <% } %>
+        </div>
+        
+        <div id="landing-header">
+     		<!--<h1>Welcome to RenchTech!</h1>-->
+    		<!--<img class="card-img-top mx-auto" src="https://i.imgur.com/ptC7nmH.png?1" alt="Card image cap">-->
+    		<img class="img-fluid" id="landing-img" src="https://i.imgur.com/0Ugh2by.png" alt="Welcome to RenchTech">
+    		<nav class="center">
+            <ul>
+                <li><a href="/projects" id="landing-header">Projects</a>
+                <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                <a href="/community" id="landing-header">Community</a></li>
+             </ul>
+            </nav>
+        </div>
+        
+        <ul class="slideshow">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
     </div>
-    
-    <div id="landing-header">
- 		<!--<h1>Welcome to RenchTech!</h1>-->
-		<!--<a href="/myprojects" class="btn btn-lg btn-primary" id="landingbtn">PROJECTS</a>-->
-		<img class="card-img-top mx-auto" src="https://i.imgur.com/ptC7nmH.png?1" alt="Card image cap">
-		<nav class="center">
-          <ul>
-            <li><a href="/projects">Projects</a></li>
-            <br>
-            
-            <li><a href="/community">Community</a></li>
-            <!--<li><a href="/login">Login</a></li>-->
-            <!--<li><a href="/register">Sign Up</a></li>-->
-          </ul>
-        </nav>
-    </div>
-    
-    <ul class="slideshow">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
-
 
         
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

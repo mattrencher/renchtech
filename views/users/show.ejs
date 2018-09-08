@@ -4,8 +4,7 @@
   <div class="col-md-4">
     <div class="thumbnail">
       <h1><%= user.firstName + " " + user.lastName %></h1>
-      <img src="<%= user.avatar %>" alt="user profile image">
-      <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+      <img src="<%= user.avatar %>" alt="user profile image" class="img-thumbnail">
     </div>
     <p> <%= user.bio %> </p>
   </div>
@@ -19,7 +18,5 @@
   </div>
   
 </div>
-
-
 
 <% include ../partials/footer %>

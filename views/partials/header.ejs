@@ -32,7 +32,7 @@
                     </li>
                 <% } else { %>
                     <li class="nav-item">
-                        <a class="nav-link" href="/users/<%= currentUser.id %>"><%= currentUser.username %></a><% if(currentUser && currentUser.isAdmin) { %><b><i>  ADMIN</i></b><% } %></a>
+                        <a class="nav-link" href="/users/<%= currentUser.id %>"><%= currentUser.username %> <% if(currentUser && currentUser.isAdmin){ %><b><i>  ADMIN</i></b><% } %></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>

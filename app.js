@@ -9,7 +9,7 @@ var express     = require("express"),
     Project  = require("./models/project"),
     Comment     = require("./models/comment"),
     User        = require("./models/user"),
-    seedDB      = require("./seeds"),
+    // seedDB      = require("./seeds"),
     expressSanitizer = require('express-sanitizer');
 
 app.locals.moment = require('moment');

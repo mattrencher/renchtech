@@ -5,13 +5,14 @@ var express = require("express"),
   Project = require("../models/project"),
   async       = require("async"),
   nodemailer  = require("nodemailer"),
-  crypto      = require("crypto");
+  crypto      = require("crypto"),
+  middleware = require("../middleware");
 
 // Root Route
 router.get("/", function(req, res){
     res.render("landing");
 });
-
+require('locus');
 // ===============
 // AUTH ROUTES
 // ===============
@@ -58,7 +59,7 @@ router.post("/login", passport.authenticate("local",
 });
 
 
-// forgot password
+// FORGOT PASSWORD ROUTES
 router.get('/forgot', function(req, res) {
   res.render('forgot');
 });
@@ -116,6 +117,7 @@ router.post('/forgot', function(req, res, next) {
   });
 });
 
+// RESET PASSWORD ROUTES
 router.get('/reset/:token', function(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     if (!user) {
@@ -177,7 +179,7 @@ router.post('/reset/:token', function(req, res) {
 });
 
 
-// User Profile
+//  SHOW USER PROFILE ROUTES
 router.get("/users/:id", function(req, res){
   User.findById(req.params.id, function(err, foundUser) {
     if(err) {
@@ -189,10 +191,47 @@ router.get("/users/:id", function(req, res){
         req.flash("error", "Something went wrong.");
         res.redirect("/");
       } 
-      res.render("users/show", {user: foundUser, projects: projects});
+      res.render("users/show", {user: foundUser, currentUser: req.user, projects: projects});
     });
   });
 });
+
+// EDIT PROFILE ROUTE
+router.get("/users/:id/edit", function(req, res){
+    User.findById(req.params.id, function(err, foundUser) {
+    if(err) {
+      req.flash("error", "Something went wrong.");
+      res.redirect("/");
+    } else {
+      res.render("users/edit", {user: foundUser});
+    }
+  });
+});
+
+// UPDATE PROFILE ROUTE
+router.put("/users/:id", function(req,res){
+    // find and update the correct user profile
+    // eval(locus);
+    var username = req.sanitize(req.body.username);
+    var firstName = req.sanitize(req.body.firstName);
+    var lastName = req.sanitize(req.body.lastName);
+    var email = req.sanitize(req.body.email);
+    var avatar = req.sanitize(req.body.avatar);
+    
+    
+    var newProfile = {name: username, firstName: firstName, lastName: lastName, email: email, avatar: avatar};  // save form inputs to new object
+    // req.body.project.body = req.sanitize(req.body.project.body);
+    User.findByIdAndUpdate(req.params.id, newProfile, function(err, updatedProfile){
+        if(err){
+          req.flash("error", "Something went wrong updating your profile")
+            res.redirect("back");
+        } else {
+            res.redirect("/users/" + req.params.id);
+        }
+    });
+});
+
+
 
 // Resume
 router.get("/resume", function(req, res){

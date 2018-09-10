@@ -6,6 +6,7 @@
       <h1><%= user.username %></h1>
       <img src="<%= user.avatar %>" alt="user profile image" class="img-thumbnail">
     </div>
+    <p> <%= user.firstName %> <%= user.lastName %></p>
     <p> <%= user.bio %> </p>
   </div>
   <div class="col-md-8">
@@ -16,6 +17,10 @@
       <% }); %>
     </ul>
   </div>
+  <!--check if current user is looking at their own profile, show edit button if TRUE-->
+  <% if(currentUser && currentUser._id.equals(user._id) || currentUser && currentUser.isAdmin){ %>
+    <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
+  <% } %>
   
 </div>
 

@@ -15,6 +15,7 @@ router.get("/", function(req, res){
     });
 });
 
+// PERSONAL PROJECT ROUTES
 // The Automated Patriot
 router.get("/5b87762aa0333f00142fe4bf", function(req, res){
     // Get all projects from DB
@@ -38,7 +39,6 @@ router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
         }
     });
 });
-
 
 // Keypad
 router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {

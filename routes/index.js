@@ -197,7 +197,7 @@ router.get("/users/:id", function(req, res){
 });
 
 // EDIT PROFILE ROUTE
-router.get("/users/:id/edit", function(req, res){
+router.get("/users/:id/edit", middleware.checkProfileOwnership, function(req, res){
     User.findById(req.params.id, function(err, foundUser) {
     if(err) {
       req.flash("error", "Something went wrong.");
@@ -209,7 +209,7 @@ router.get("/users/:id/edit", function(req, res){
 });
 
 // UPDATE PROFILE ROUTE
-router.put("/users/:id", function(req,res){
+router.put("/users/:id", middleware.checkProfileOwnership, function(req,res){
     // find and update the correct user profile
     // eval(locus);
     var username = req.sanitize(req.body.username);

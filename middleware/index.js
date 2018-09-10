@@ -1,8 +1,9 @@
 // all the middlware goes here
-var Project = require("../models/project");
-var Blog = require("../models/blog");
-var Comment = require("../models/comment");
-var middlewareObj = {};
+var  Project = require("../models/project"),
+  Blog = require("../models/blog"),
+  Comment = require("../models/comment"),
+  User = require("../models/user"),
+  middlewareObj = {};
 
 middlewareObj.checkProjectOwnership = function(req, res, next){
   // is user logged in
@@ -25,6 +26,30 @@ middlewareObj.checkProjectOwnership = function(req, res, next){
       // console.log("YOU NEED TO BE LOGGED IN");
       req.flash("error", "You need to be logged in to do that");
       res.redirect("back");
+  }
+}
+
+middlewareObj.checkProfileOwnership = function(req, res, next){
+  // is user logged in
+  if(req.isAuthenticated()){
+      // does this user own the project?
+      User.findById(req.params.id, function(err, foundUser){
+      if(err || !foundUser){
+        req.flash("error", "Profile not found");
+        res.redirect("back");
+      } else {
+        if(foundUser && foundUser._id.equals(req.user._id) || req.user.isAdmin){
+          next();
+        } else {
+          req.flash("error", "You don't have permission to do that")
+          res.redirect("back");
+        }
+      }
+  });
+  } else {
+      // console.log("YOU NEED TO BE LOGGED IN");
+      req.flash("error", "You need to log in to edit your profile");
+      res.redirect("/community");
   }
 }
 

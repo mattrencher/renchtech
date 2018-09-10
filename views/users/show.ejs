@@ -1,27 +1,32 @@
 <% include ../partials/header %>
-
-<div class="row">
-  <div class="col-md-4">
-    <div class="thumbnail">
-      <h1><%= user.username %></h1>
-      <img src="<%= user.avatar %>" alt="user profile image" class="img-thumbnail">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-sm-8">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top img-responsive" src="<%= user.avatar %>" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= user.username %></h5>
+          <h3 class="card-title"><%= user.firstName %> <%= user.lastName %></h3>
+          <p class="card-text"><%= user.bio %></p>
+        </div>
+      </div>
     </div>
-    <p> <%= user.firstName %> <%= user.lastName %></p>
-    <p> <%= user.bio %> </p>
+    <div class="col-md-4 col-sm-4">
+      <h3><%= user.username %>'s Projects:</h3>
+      <ul>
+        <% projects.forEach(function(project) { %>
+          <li><a href="/community/<%= project.id %>"><%= project.name %></a></li>
+        <% }); %>
+      </ul>
+    </div>
+    <div class="container">
+    <!--check if current user is looking at their own profile, show edit button if TRUE-->
+    <% if(currentUser && currentUser._id.equals(user._id) || currentUser && currentUser.isAdmin){ %>
+      <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
+    <% } %>
+    </div>
+    
   </div>
-  <div class="col-md-8">
-    <h3><%= user.username %>'s Projects:</h3>
-    <ul>
-      <% projects.forEach(function(project) { %>
-        <li><a href="/community/<%= project.id %>"><%= project.name %></a></li>
-      <% }); %>
-    </ul>
-  </div>
-  <!--check if current user is looking at their own profile, show edit button if TRUE-->
-  <% if(currentUser && currentUser._id.equals(user._id) || currentUser && currentUser.isAdmin){ %>
-    <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
-  <% } %>
-  
 </div>
 
 <% include ../partials/footer %>

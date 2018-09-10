@@ -32,6 +32,7 @@ app.use(flash());
 app.locals.moment = require('moment');
 app.use(expressSanitizer());
 
+
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Ichiban number 1",

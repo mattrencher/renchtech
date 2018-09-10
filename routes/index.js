@@ -217,8 +217,7 @@ router.put("/users/:id", function(req,res){
     var lastName = req.sanitize(req.body.lastName);
     var email = req.sanitize(req.body.email);
     var avatar = req.sanitize(req.body.avatar);
-    
-    
+
     var newProfile = {name: username, firstName: firstName, lastName: lastName, email: email, avatar: avatar};  // save form inputs to new object
     // req.body.project.body = req.sanitize(req.body.project.body);
     User.findByIdAndUpdate(req.params.id, newProfile, function(err, updatedProfile){

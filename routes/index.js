@@ -8,6 +8,12 @@ var express = require("express"),
   crypto      = require("crypto"),
   middleware = require("../middleware");
 
+// Mailgun variables
+var api_key = 'dbe59d6aa65e9099226f19868b2c770c-7bbbcb78-80c461e9';
+var domain = 'mg.renchtech.com';
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+ 
+
 // Root Route
 router.get("/", function(req, res){
     res.render("landing");
@@ -88,27 +94,42 @@ router.post('/forgot', function(req, res, next) {
       });
     },
     function(token, user, done) {
-      var smtpTransport = nodemailer.createTransport({
-        service: 'Gmail', 
-        auth: {
+      // var smtpTransport = nodemailer.createTransport({
+      //   service: 'Gmail', 
+      //   auth: {
           
-          user: 'renchtechnology@gmail.com',
-          pass: process.env.GMAILPW
-        }
-      });
-      var mailOptions = {
+      //     user: 'renchtechnology@gmail.com',
+      //     pass: process.env.GMAILPW
+      //   }
+      // });
+      // var mailOptions = {
+      //   to: user.email,
+      //   from: 'renchtechnology@gmail.com',
+      //   subject: 'Node.js Password Reset',
+      //   text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+      //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+      //     'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+      //     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      // };
+      // smtpTransport.sendMail(mailOptions, function(err) {
+      //   console.log('mail sent');
+      //   req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+      //   done(err, 'done');
+      // });
+      
+      var data = {
+        from: 'Excited User <me@samples.mailgun.org>',
         to: user.email,
-        from: 'renchtechnology@gmail.com',
-        subject: 'Node.js Password Reset',
+        subject: 'RenchTech Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
           'http://' + req.headers.host + '/reset/' + token + '\n\n' +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
-      smtpTransport.sendMail(mailOptions, function(err) {
-        console.log('mail sent');
+      mailgun.messages().send(data, function (error, body) {
+        console.log(body);
         req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-        done(err, 'done');
+        done(error, 'done');
       });
     }
   ], function(err) {

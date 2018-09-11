@@ -22,6 +22,16 @@ var commentRoutes = require("./routes/comments"),
 
 var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech";
 mongoose.connect(url);
+ 
+// var data = {
+//   from: 'Excited User <me@samples.mailgun.org>',
+//   to: 'mattrencher@gmail.com',
+//   subject: 'Hello',
+//   text: 'Testing some Mailgun awesomeness!'
+// };
+// mailgun.messages().send(data, function (error, body) {
+//   console.log(body);
+// });
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");   // allows ejs files to remove suffix
@@ -32,13 +42,13 @@ app.use(flash());
 app.locals.moment = require('moment');
 app.use(expressSanitizer());
 
-
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Ichiban number 1",
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -57,7 +67,6 @@ app.use("/projects", projectRoutes);
 app.use("/community", communityRoutes);
 app.use("/community/:id/comments", commentRoutes);
 
-    
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log(("RenchTech has started!!"));
 });

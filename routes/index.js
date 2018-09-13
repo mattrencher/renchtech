@@ -18,7 +18,7 @@ var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 router.get("/", function(req, res){
     res.render("landing");
 });
-require('locus');
+
 // ===============
 // AUTH ROUTES
 // ===============
@@ -232,7 +232,7 @@ router.get("/users/:id/edit", middleware.checkProfileOwnership, function(req, re
 // UPDATE PROFILE ROUTE
 router.put("/users/:id", middleware.checkProfileOwnership, function(req,res){
     // find and update the correct user profile
-    // eval(locus);
+    
     var username = req.sanitize(req.body.username);
     var firstName = req.sanitize(req.body.firstName);
     var lastName = req.sanitize(req.body.lastName);

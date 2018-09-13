@@ -9,9 +9,8 @@ var express = require("express"),
   middleware = require("../middleware");
 
 // Mailgun variables
-var api_key = '***REMOVED***';
 var domain = 'mg.renchtech.com';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+var mailgun = require('mailgun-js')({apiKey: process.env.mg_api_key, domain: domain});
  
 
 // Root Route

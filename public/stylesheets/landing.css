@@ -70,22 +70,22 @@ ul{
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(https://i.imgur.com/BiM79Xf.jpg) ;
+  background-image: url(https://res.cloudinary.com/dvryuqlqn/image/upload/v1536809636/renchtech/landing/img1.jpg) ;
 }
 .slideshow li:nth-child(2) { 
-  background-image: url(https://i.imgur.com/5Y9wCGo.jpg);
+  background-image: url(https://res.cloudinary.com/dvryuqlqn/image/upload/v1536809636/renchtech/landing/img2.jpg);
   animation-delay: 8s; 
 }
 .slideshow li:nth-child(3) { 
-  background-image: url(https://i.imgur.com/YeAkYWj.jpg);
+  background-image: url(https://res.cloudinary.com/dvryuqlqn/image/upload/v1536809636/renchtech/landing/img3.jpg);
   animation-delay: 16s; 
 }
 .slideshow li:nth-child(4) { 
-  background-image: url(https://i.imgur.com/esepx1c.jpg);
+  background-image: url(https://res.cloudinary.com/dvryuqlqn/image/upload/v1536809636/renchtech/landing/img4.jpg);
   animation-delay: 24s; 
 }
 .slideshow li:nth-child(5) { 
-  background-image: url(https://i.imgur.com/ctbeJCY.jpg);
+  background-image: url(https://res.cloudinary.com/dvryuqlqn/image/upload/v1536809637/renchtech/landing/img5.jpg);
   animation-delay: 32s; 
 }
 

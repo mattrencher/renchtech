@@ -21,7 +21,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     var image = req.sanitize(req.body.project.image);
     var desc = req.sanitize(req.body.project.description);
     var video = req.sanitize(req.body.project.video);
-    var vid = video.replace("watch?v=", "embed/");
+    var vid = video;
+    if (!vid == null){
+        vid = vid.replace("watch?v=", "embed/");
+    }
     var author ={
         id: req.user._id,
         username: req.user.username

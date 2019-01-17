@@ -52,6 +52,18 @@ router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
     });
 });
 
+// USB Controller
+router.get("/5c40f7f8f3e1bc0c5d62e713", function(req, res) {
+    // Get all projects from DB
+    Blog.find({}, function(err, allProjects){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("projects/usbcontroller",{projects:allProjects, currentUser: req.user, page: 'usbcontroller'});
+        }
+    });
+});
+
 // CREATE - add new project to DB
 router.post("/", middleware.isAdmin, function(req, res){
     var name = req.body.name;
@@ -65,7 +77,7 @@ router.post("/", middleware.isAdmin, function(req, res){
     var newProject = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
     var cleanProject = req.sanitize(newProject);
-    Blog.create(cleanProject, function(err, newlyCreated){
+    Blog.create(newProject, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {

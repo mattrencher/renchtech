@@ -1,7 +1,10 @@
 body {
   background-color: #000;
-  font-family: 'Source Sans Pro', sans-serif;
-  /*font-weight: bold;*/
+  /*font-family: 'Source Sans Pro', sans-serif;*/
+  /*font-family: 'Share Tech Mono', monospace;*/
+  /*font-family: 'Overpass Mono', monospace;*/
+  font-family: 'Ubuntu Mono', monospace;
+  font-weight: bold;
   /*display: -ms-flexbox;*/
   /*display: -webkit-box;*/
   /*display: flex;*/
@@ -16,6 +19,7 @@ body {
   /*background-color: #f5f5f5;*/
   /*margin-bottom: 60px;*/
 }
+
 
 
 #landing-header {

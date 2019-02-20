@@ -1,4 +1,4 @@
-// all the middlware goes here
+// all the middleware goes here
 var  Project = require("../models/project"),
   Blog = require("../models/blog"),
   Comment = require("../models/comment"),

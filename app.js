@@ -22,7 +22,7 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 // var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech";
-var url = process.env.db_url;
+var url = process.env.DATABASEURL || process.env.db_url;
 mongoose.connect(url);
  
 // var data = {

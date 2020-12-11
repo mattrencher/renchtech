@@ -21,7 +21,7 @@ var commentRoutes = require("./routes/comments"),
     projectRoutes = require("./routes/projects"),
     indexRoutes = require("./routes/index");
 
-var url = "mongodb+srv://matt:mlabpw123@renchtech.oceyb.mongodb.net/renchtech?retryWrites=true&w=majority"
+var url = process.env.db_url;
 mongoose.connect(url);
  
 // var data = {

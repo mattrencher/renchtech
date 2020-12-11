@@ -21,9 +21,7 @@ var commentRoutes = require("./routes/comments"),
     projectRoutes = require("./routes/projects"),
     indexRoutes = require("./routes/index");
 
-// var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech";
-// var url = process.env.DATABASEURL || process.env.db_url;
-var url = "mongodb+srv://matt:SEBAS80mm@renchtech.oceyb.mongodb.net/renchtech?retryWrites=true&w=majority";
+var url = process.env.db_url;
 mongoose.connect(url);
  
 // var data = {

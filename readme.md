@@ -1,10 +1,6 @@
 #RenchTech Project Hub
 
-Adapted from Colt Steele's Wev Developer Bootcamp
-
 RESTful Routes
-name      url      verb    desc.
-===============================================
 
 INDEX   /projects
 NEW     /projects/new

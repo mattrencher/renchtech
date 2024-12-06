@@ -10,9 +10,9 @@ var express = require("express"),
 
 // Mailgun variables
 var domain = 'mg.renchtech.com';
-var apiKey = "dbe59d6aa65e9099226f19868b2c770c-7bbbcb78-80c461e9";
+var apiKey = process.env.mg_api_key;
 // var mailgun = require('mailgun-js')({apiKey: process.env.mg_api_key || process.env.apiKey, domain: domain});
-var mailgun = require('mailgun-js')({apiKey: "dbe59d6aa65e9099226f19868b2c770c-7bbbcb78-80c461e9", domain: domain});
+var mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
 
 // Root Route
 router.get("/", function(req, res){

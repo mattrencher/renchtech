@@ -1,25 +1,30 @@
 var express = require("express");
 var router = express.Router();
-var Blog = require("../models/blog");
+var Project = require("../models/project");
 var middleware = require("../middleware");
 
 // // INDEX - show all projects
 router.get("/", function(req, res){
     // Get all projects from DB
-    Blog.find({}, function(err, allProjects){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("projects/index",{projects:allProjects, currentUser: req.user, page: 'projects'});
-        }
+    
+    Project.find({})
+    .then(documents => {
+        // Do something with the found documents
+        res.render("projects/index",{projects:documents, currentUser: req.user, page: 'projects'});
+        console.log(documents);
+    })
+    .catch(err => {
+        // Handle errors
+        console.error(err);
     });
+
 });
 
 // PERSONAL PROJECT ROUTES
 // The Automated Patriot
 router.get("/5b87762aa0333f00142fe4bf", function(req, res){
     // Get all projects from DB
-    Blog.find({}, function(err, foundProject){
+    Project.find({}, function(err, foundProject){
         if(err){
             console.log(err);
         } else {
@@ -31,7 +36,7 @@ router.get("/5b87762aa0333f00142fe4bf", function(req, res){
 // Recycling Ethernet Cables
 router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
     // Get all projects from DB
-    Blog.find({}, function(err, foundProject){
+    Project.find({}, function(err, foundProject){
         if(err){
             console.log(err);
         } else {
@@ -43,7 +48,7 @@ router.get("/5b8882fbdf46d40014db3efe", function(req, res) {
 // Keypad
 router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
     // Get all projects from DB
-    Blog.find({}, function(err, allProjects){
+    Project.find({}, function(err, allProjects){
         if(err){
             console.log(err);
         } else {
@@ -55,7 +60,7 @@ router.get("/5b8b6e269fc5bb17fe4bf200", function(req, res) {
 // USB Controller
 router.get("/5c40f7f8f3e1bc0c5d62e713", function(req, res) {
     // Get all projects from DB
-    Blog.find({}, function(err, allProjects){
+    Project.find({}, function(err, allProjects){
         if(err){
             console.log(err);
         } else {
@@ -77,7 +82,7 @@ router.post("/", middleware.isAdmin, function(req, res){
     var newProject = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
     var cleanProject = req.sanitize(newProject);
-    Blog.create(newProject, function(err, newlyCreated){
+    Project.create(newProject, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
@@ -96,7 +101,7 @@ router.get("/new", middleware.isAdmin, function(req, res){
 // SHOW - shows more info about one project
 // router.get("/:id", function(req, res){
 //     // find the project with provided ID
-//     Blog.findById(req.params.id).populate("comments").exec(function(err, foundProject){
+//     Project.findById(req.params.id).populate("comments").exec(function(err, foundProject){
 //         if(err || !foundProject){
 //             console.log(err);
 //             req.flash("error", "Project not found");
@@ -115,7 +120,7 @@ router.get("/new", middleware.isAdmin, function(req, res){
 // EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.isAdmin, function(req, res){
     //find the project with provided ID
-    Blog.findById(req.params.id, function(err, foundProject){
+    Project.findById(req.params.id, function(err, foundProject){
         if(err){
             console.log(err);
         } else {
@@ -128,7 +133,7 @@ router.get("/:id/edit", middleware.isAdmin, function(req, res){
 // UPDATE PROJECT ROUTE
 router.put("/:id", middleware.isAdmin, function(req,res){
     // find and update the correct project
-    Blog.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
+    Project.findByIdAndUpdate(req.params.id, req.body.project, function(err, updatedProject){
         if(err){
             res.redirect("/projects");
         } else {
@@ -140,7 +145,7 @@ router.put("/:id", middleware.isAdmin, function(req,res){
 
 // DESTORY PROJECT ROUTE
 router.delete("/:id", middleware.isAdmin, function(req, res){
-    Blog.findByIdAndRemove(req.params.id, function(err){
+    Project.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect("/projects");
         } else {

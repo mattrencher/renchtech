@@ -8,6 +8,8 @@ var express = require("express"),
   crypto      = require("crypto"),
   middleware = require("../middleware");
 
+
+
 // Mailgun variables
 var domain = 'mg.renchtech.com';
 var apiKey = process.env.mg_api_key;

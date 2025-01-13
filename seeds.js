@@ -20,41 +20,21 @@ var data = [
   }
 ]
 
-function seedDB(){
-  // Remove all projects
-  Project.remove({}, function(err){
-    if(err){
-      console.log(err);
-    }
-    console.log("removed projects");
-    // Add a few projects
-    data.forEach(function(seed){
-      Project.create(seed, function(err, project){
-        if(err){
-          console.log(err)
-        } else {
-          console.log("added a project");
-          // create a comment
-          Comment.create({
-            text: "This place is great",
-            author: "Homer"
-          }, function(err, comment){
-            if(err){
-              console.log(err);
-            } else {
-              project.comments.push(comment);
-              project.save();
-              console.log("Created new comment");
-            }
-            
-          });
-        }
+async function deleteAndSeed(){
+  const result = await Project.deleteMany({});
+  console.log(result);
+
+  data.forEach(function(seed){
+    const proj = Project.create(seed)
+    .then(function(project){
+      console.log("added a project");
+      // create a comment
+      Comment.create({
+        text: "This place is great",
       });
     });
   });
-  
-  // Add a few comments
-
 }
 
-module.exports = seedDB;
+
+module.exports = deleteAndSeed;

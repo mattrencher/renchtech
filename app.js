@@ -1,4 +1,4 @@
-var express     = require("express"),
+const express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
@@ -12,8 +12,12 @@ var express     = require("express"),
     User        = require("./models/user"),
     // seedDB      = require("./seeds"),
     expressSanitizer = require('express-sanitizer');
+    ejs = require('ejs');
+    ejsLint = require('ejs-lint');
 
 app.locals.moment = require('moment');
+
+require('dotenv').config()
 
 // requiring routes
 var commentRoutes = require("./routes/comments"),
@@ -21,7 +25,7 @@ var commentRoutes = require("./routes/comments"),
     projectRoutes = require("./routes/projects"),
     indexRoutes = require("./routes/index");
 
-var url = process.env.DATABASEURL || "mongodb://matt:mlabpw123@ds229722.mlab.com:29722/renchtech";
+var url = process.env.DATABASEURL;
 mongoose.connect(url);
  
 // var data = {
@@ -68,6 +72,6 @@ app.use("/projects", projectRoutes);
 app.use("/community", communityRoutes);
 app.use("/community/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log(("RenchTech has started!!"));
+app.listen(process.env.PORT, function(){
+    console.log(`RenchTech listening on port ${process.env.PORT}`);
 });

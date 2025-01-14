@@ -25,8 +25,8 @@ var commentRoutes = require("./routes/comments"),
     projectRoutes = require("./routes/projects"),
     indexRoutes = require("./routes/index");
 
-var url = process.env.DATABASEURL;
-mongoose.connect(url);
+var db_url = process.env.DATABASE_URL;
+mongoose.connect(db_url);
  
 // var data = {
 //   from: 'Excited User <me@samples.mailgun.org>',
@@ -72,6 +72,6 @@ app.use("/projects", projectRoutes);
 app.use("/community", communityRoutes);
 app.use("/community/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, function(){
-    console.log(`RenchTech listening on port ${process.env.PORT}`);
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log(`RenchTech ༼ つ ◕_◕ ༽つ http://${process.env.IP}:${process.env.PORT}`)
 });

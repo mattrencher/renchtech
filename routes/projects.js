@@ -82,11 +82,7 @@ router.post("/", middleware.isAdmin, function(req, res){
     var newProject = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
     var cleanProject = req.sanitize(newProject);
-<<<<<<< HEAD
     Project.create(newProject, function(err, newlyCreated){
-=======
-    Blog.create(newProject, function(err, newlyCreated){
->>>>>>> bdfdfd1f7ba5002e6872552b87256f6c07e90ff4
         if(err){
             console.log(err);
         } else {

@@ -72,6 +72,12 @@ app.use("/projects", projectRoutes);
 app.use("/community", communityRoutes);
 app.use("/community/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log(`RenchTech ༼ つ ◕_◕ ༽つ http://${process.env.IP}:${process.env.PORT}`)
-});
+if(process.env.NODE_ENV === 'dev'){ 
+    app.listen(process.env.PORT, process.env.IP, function(){
+        console.log(`RenchTech ༼ つ ◕_◕ ༽つ http://${process.env.IP}:${process.env.PORT}`)
+    });
+} else if(process.env.NODE_ENV === 'production'){
+    app.listen(function(){
+        console.log(`RenchTech running...`)
+    });
+}

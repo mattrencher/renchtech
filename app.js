@@ -13,7 +13,6 @@ const express     = require("express"),
     // seedDB      = require("./seeds"),
     expressSanitizer = require('express-sanitizer');
     ejs = require('ejs');
-    ejsLint = require('ejs-lint');
 
 app.locals.moment = require('moment');
 

@@ -13,7 +13,6 @@ const express     = require("express"),
     // seedDB      = require("./seeds"),
     expressSanitizer = require('express-sanitizer');
     ejs = require('ejs');
-    ejsLint = require('ejs-lint');
 
 app.locals.moment = require('moment');
 
@@ -72,12 +71,12 @@ app.use("/projects", projectRoutes);
 app.use("/community", communityRoutes);
 app.use("/community/:id/comments", commentRoutes);
 
-if(process.env.NODE_ENV === 'dev'){ 
+if(process.env.NODE_ENV === 'development'){ 
     app.listen(process.env.PORT, process.env.IP, function(){
         console.log(`RenchTech ༼ つ ◕_◕ ༽つ http://${process.env.IP}:${process.env.PORT}`)
     });
-} else if(process.env.NODE_ENV === 'production'){
-    app.listen(function(){
+} else{
+    app.listen(process.env.PORT || 3000, function(){
         console.log(`RenchTech running...`)
     });
 }

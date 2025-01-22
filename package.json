@@ -5,7 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "az deploy": "az webapp up --sku F1 --plan renchtechasp --n renchtech --runtime NODE:20LTS --os-type Windows",
+    "az update": "az webapp up --os-type Windows",
+    "az stop": "az webapp stop --name renchtech",
+    "az locations": "az appservice list-locations --sku F1",
+    "az default": "az configure --defaults location=canadaeast"
   },
   "author": "Matt Rencher",
   "license": "ISC",

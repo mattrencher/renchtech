@@ -8,8 +8,6 @@ var express = require("express"),
   crypto      = require("crypto"),
   middleware = require("../middleware");
 
-
-
 // Mailgun variables
 // var domain = 'mg.renchtech.com';
 // var apiKey = process.env.mg_api_key;
@@ -51,7 +49,7 @@ router.post("/register", function(req, res){
     });
 });
 
-//show login form
+// Show login form
 router.get("/login", function(req, res){
    res.render("login", {page: 'login'}); 
 });
@@ -157,13 +155,13 @@ router.post('/reset/:token', function(req, res) {
       var smtpTransport = nodemailer.createTransport({
         service: 'Gmail', 
         auth: {
-          user: 'renchtechnology@gmail.com',
+          user: process.env.GMAIL_USER,
           pass: process.env.GMAILPW
         }
       });
       var mailOptions = {
         to: user.email,
-        from: 'renchtechnology@mail.com',
+        from: process.env.GMAIL_USER,
         subject: 'Your password has been changed',
         text: 'Hello,\n\n' +
           'This is a confirmation that the password for your RenchTech account ' + user.email + ' has just been changed.\n'

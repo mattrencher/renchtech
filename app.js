@@ -48,7 +48,7 @@ app.use(expressSanitizer());
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Ichiban number 1",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));

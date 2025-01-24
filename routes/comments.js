@@ -1,9 +1,9 @@
-var express = require("express");
-var router = express.Router({mergeParams: true});
-var Project = require("../models/project");
-var Blog = require("../models/blog");
-var Comment = require("../models/comment");
-var middleware = require("../middleware");
+import { Router } from "express";
+var router = Router({mergeParams: true});
+import Project from "../models/project.js";
+import Blog from "../models/blog.js";
+import Comment from "../models/comment.js";
+import middleware from "../middleware/index.js";
 
 // ============================================
 // COMMENTS ROUTES
@@ -97,4 +97,4 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req,res
 // middleware moved to index.js
 
 
-module.exports = router;
+export default router;

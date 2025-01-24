@@ -1,53 +1,39 @@
-const express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    flash       = require("connect-flash"),
-    passport    = require("passport"),
-    // passport     = require("express-session"),
-    LocalStrategy = require("passport-local"),
-    methodOverride = require("method-override"),
-    Project  = require("./models/project"),
-    Comment     = require("./models/comment"),
-    User        = require("./models/user"),
-    // seedDB      = require("./seeds"),
-    expressSanitizer = require('express-sanitizer');
-    ejs = require('ejs');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import flash from 'connect-flash';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import methodOverride from 'method-override';
+import Project from './models/project.js';
+import Comment from './models/comment.js';
+import User from './models/user.js';
+import expressSanitizer from 'express-sanitizer';
+import ejs from 'ejs';
+import moment from 'moment';
+import session from 'express-session';
+import 'dotenv/config';
 
-app.locals.moment = require('moment');
+// Importing routes
+import commentRoutes from './routes/comments.js';
+import communityRoutes from './routes/community.js';
+import projectRoutes from './routes/projects.js';
+import indexRoutes from './routes/index.js';
 
-require('dotenv').config()
-
-// requiring routes
-var commentRoutes = require("./routes/comments"),
-    communityRoutes = require("./routes/community"),
-    projectRoutes = require("./routes/projects"),
-    indexRoutes = require("./routes/index");
-
-var db_url = process.env.DATABASE_URL;
+const app = express();
+const db_url = process.env.DATABASE_URL;
 mongoose.connect(db_url);
- 
-// var data = {
-//   from: 'Excited User <me@samples.mailgun.org>',
-//   to: 'mattrencher@gmail.com',
-//   subject: 'Hello',
-//   text: 'Testing some Mailgun awesomeness!'
-// };
-// mailgun.messages().send(data, function (error, body) {
-//   console.log(body);
-// });
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");   // allows ejs files to remove suffix
-app.use(express.static(__dirname + "/public"));
+app.set("view engine", "ejs");
+app.use(express.static('./public'));
 app.use(methodOverride("_method"));
 app.use(flash());
-// seedDB(); // seed the database
-app.locals.moment = require('moment');
+app.locals.moment = moment;
 app.use(expressSanitizer());
 
 // PASSPORT CONFIGURATION
-app.use(require("express-session")({
+app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
@@ -59,12 +45,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function(req, res, next){
+app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
     next();
-})
+});
 
 app.use("/", indexRoutes);
 app.use("/projects", projectRoutes);
@@ -72,11 +58,11 @@ app.use("/community", communityRoutes);
 app.use("/community/:id/comments", commentRoutes);
 
 if(process.env.NODE_ENV === 'development'){ 
-    app.listen(process.env.PORT, process.env.IP, function(){
+    app.listen(process.env.PORT, process.env.IP, () => {
         console.log(`RenchTech ༼ つ ◕_◕ ༽つ http://${process.env.IP}:${process.env.PORT}`)
     });
 } else{
-    app.listen(process.env.PORT || 3000, function(){
+    app.listen(process.env.PORT || 3000, () => {
         console.log(`RenchTech running...`)
     });
 }

@@ -12,6 +12,7 @@
     "az locations": "az appservice list-locations --sku F1",
     "az default": "az configure --defaults location=canadaeast"
   },
+  "type": "module",
   "author": "Matt Rencher",
   "license": "ISC",
   "dependencies": {

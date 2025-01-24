@@ -1,18 +1,12 @@
-var express = require("express"),
-  router = express.Router(),
-  passport    = require("passport"),
-  User = require("../models/user"),
-  Project = require("../models/project"),
-  async       = require("async"),
-  nodemailer  = require("nodemailer"),
-  crypto      = require("crypto"),
-  middleware = require("../middleware");
-
-// Mailgun variables
-// var domain = 'mg.renchtech.com';
-// var apiKey = process.env.mg_api_key;
-// var mailgun = require('mailgun-js')({apiKey: process.env.mg_api_key || process.env.apiKey, domain: domain});
-// var mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
+import { Router } from "express";
+var router = Router({mergeParams: true});
+import Project from '../models/project.js';
+import User from '../models/user.js';
+import middleware from "../middleware/index.js";
+import async from "async";
+import passport from "passport";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 // Root Route
 router.get("/", function(req, res){
@@ -244,4 +238,4 @@ router.get("/logout", function(req, res){
    res.redirect("/community");
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-var projectSchema = new mongoose.Schema({
+var projectSchema = new Schema({
    name: String,
    image: String,
    description: String,
@@ -8,17 +8,17 @@ var projectSchema = new mongoose.Schema({
    createdAt: { type: Date, default: Date.now },
    author: {
       id: {
-         type: mongoose.Schema.Types.ObjectId,
+         type: Schema.Types.ObjectId,
          ref: "User"
       },
       username: String
    },
    comments: [
       {
-         type: mongoose.Schema.Types.ObjectId,
+         type: Schema.Types.ObjectId,
          ref: "Comment"
       }
    ]
 });
 
-module.exports = mongoose.model("Project", projectSchema);
+export default model("Project", projectSchema);

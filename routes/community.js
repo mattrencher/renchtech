@@ -1,7 +1,7 @@
-var express = require("express");
-var router = express.Router();
-var Project = require("../models/project");
-var middleware = require("../middleware");
+import { Router } from "express";
+var router = Router();
+import Project from "../models/project.js";
+import middleware from "../middleware/index.js";
 
 // // INDEX - show all projects
 router.get("/", function(req, res){
@@ -106,4 +106,4 @@ router.delete("/:id", middleware.checkProjectOwnership, function(req, res){
     });
 });
 
-module.exports = router;
+export default router;

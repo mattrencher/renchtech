@@ -1,9 +1,9 @@
 // all the middleware goes here
-var  Project = require("../models/project"),
-  Blog = require("../models/blog"),
-  Comment = require("../models/comment"),
-  User = require("../models/user"),
-  middlewareObj = {};
+import Project from "../models/project.js";
+import Blog from "../models/blog.js";
+import Comment from "../models/comment.js";
+import User from "../models/user.js";
+var middlewareObj = {};
 
 middlewareObj.checkProjectOwnership = function(req, res, next){
   // is user logged in
@@ -92,4 +92,4 @@ middlewareObj.isAdmin = function isAdmin(req, res, next){
   }
 }
 
-module.exports = middlewareObj;
+export default middlewareObj;

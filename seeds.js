@@ -4,7 +4,7 @@ var Comment   = require("./models/comment");
 
 var data = [
   {
-    name: "CLouds Rest",
+    name: "Clouds Rest",
     image: "https://farm5.staticflickr.com/4063/4349546568_d506b3b872.jpg",
     description: "asdfklajhsdflajkshdflkhj"
   },

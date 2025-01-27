@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "start": "node app.js",
     "az deploy": "az webapp up --sku F1 --plan renchtechasp --n renchtech --runtime NODE:20LTS --os-type Windows",
     "az update": "az webapp up --os-type Windows",

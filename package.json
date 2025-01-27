@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node app.js",
     "az deploy": "az webapp up --sku F1 --plan renchtechasp --n renchtech --runtime NODE:20LTS --os-type Windows",
     "az update": "az webapp up --os-type Windows",
@@ -33,6 +33,7 @@
     "passport-local-mongoose": "^8.0.0"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "locus": "^2.0.1"
   }
 }

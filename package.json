@@ -5,12 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "start": "node app.js",
-    "az deploy": "az webapp up --sku F1 --plan renchtechasp --n renchtech --runtime NODE:20LTS --os-type Windows",
-    "az update": "az webapp up --os-type Windows",
-    "az stop": "az webapp stop --name renchtech",
-    "az locations": "az appservice list-locations --sku F1",
-    "az default": "az configure --defaults location=canadaeast"
+    "start": "node run.cjs",
+    "deploy": "az webapp up --sku F1 --plan renchtechasp --n renchtech --runtime NODE:20LTS --os-type Windows",
+    "update": "az webapp up --runtime NODE:20LTS --os-type Windows"
   },
   "type": "module",
   "author": "Matt Rencher",

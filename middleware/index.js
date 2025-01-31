@@ -8,20 +8,19 @@ var middlewareObj = {};
 middlewareObj.checkProjectOwnership = function(req, res, next){
   // is user logged in
   if(req.isAuthenticated()){
-      // does this user own the project?
-      Project.findById(req.params.id, function(err, foundProject){
-      if(err || !foundProject){
-        req.flash("error", "Project not found");
-        res.redirect("back");
-      } else {
-        if(foundProject.author.id.equals(req.user._id) || req.user.isAdmin){
-          next();
-        } else {
-          req.flash("error", "You don't have permission to do that")
+      Project.findById(req.params.id)
+      .then((foundProject) => {
+          if(foundProject.author.id.equals(req.user._id) || req.user.isAdmin){
+              next();
+          } else {
+              req.flash("error", "You don't have permission to do that");
+              res.redirect("back");
+          }
+      })
+      .catch((err) => {
+          req.flash("error", "Project not found");
           res.redirect("back");
-        }
-      }
-  });
+      });
   } else {
       // console.log("YOU NEED TO BE LOGGED IN");
       req.flash("error", "You need to be logged in to do that");

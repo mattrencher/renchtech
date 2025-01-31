@@ -5,11 +5,8 @@ import flash from 'connect-flash';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import methodOverride from 'method-override';
-import Project from './models/project.js';
-import Comment from './models/comment.js';
 import User from './models/user.js';
 import expressSanitizer from 'express-sanitizer';
-import ejs from 'ejs';
 import moment from 'moment';
 import session from 'express-session';
 import 'dotenv/config';
@@ -36,7 +33,9 @@ app.use(expressSanitizer());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    maxAge: null,
+    cookie: {}
 }));
 
 app.use(passport.initialize());

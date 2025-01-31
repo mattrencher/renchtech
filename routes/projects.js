@@ -11,7 +11,7 @@ router.get("/", function(req, res){
     .then(documents => {
         // Do something with the found documents
         res.render("projects/index",{projects:documents, currentUser: req.user, page: 'projects'});
-        console.log(documents);
+        // console.log(documents);
     })
     .catch(err => {
         // Handle errors
@@ -79,17 +79,21 @@ router.post("/", middleware.isAdmin, function(req, res){
         id: req.user._id,
         username: req.user.username
     }
-    var newProject = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
+    var newProjectData = {name: name, image: image, body: body, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
-    var cleanProject = req.sanitize(newProject);
-    Project.create(newProject, function(err, newlyCreated){
-        if(err){
-            console.log(err);
-        } else {
-            console.log(newlyCreated);
-            // redirect back to projects page
-            res.redirect("/projects");
-        }
+    var cleanProject = req.sanitize(newProjectData);
+    Project.create(newProjectData)
+    .then((newProject) => {
+        console.log("added a project");
+        // create a comment
+        Comment.create({
+            text: "This place is great",
+        });
+        res.redirect("/projects");
+    })
+    .catch((err) => {
+        console.log(err);
+        res.redirect("/projects");
     });
 });
 
@@ -99,23 +103,35 @@ router.get("/new", middleware.isAdmin, function(req, res){
 });
 
 // SHOW - shows more info about one project
-// router.get("/:id", function(req, res){
-//     // find the project with provided ID
-//     Project.findById(req.params.id).populate("comments").exec(function(err, foundProject){
-//         if(err || !foundProject){
-//             console.log(err);
-//             req.flash("error", "Project not found");
-//             res.redirect("back");
-//         } else {
-//             //console.log(foundProject);
-//             // render show template with that project
-//             res.render("projects/show", {project: foundProject});
-//         }
-//     });
-//     // render show template with that project
-//     // res.send("This will be the show page one day...")
-//     // res.render("show");
-// });
+router.get("/:id", function(req, res){
+    // find the project with provided ID
+    Project.findById(req.params.id).populate("comments")
+        .then((foundProject) => {
+            // console.log(foundProject);
+            // render show template with that project
+            res.render("projects/show", {project: foundProject});
+        })
+        .catch((err) => {
+            console.log(err);
+            req.flash("error", "Project not found");
+            res.redirect("back");
+        });
+        
+    // Project.findById(req.params.id).populate("comments").exec(function(err, foundProject){
+    //     if(err || !foundProject){
+    //         console.log(err);
+    //         req.flash("error", "Project not found");
+    //         res.redirect("back");
+    //     } else {
+    //         //console.log(foundProject);
+    //         // render show template with that project
+    //         res.render("projects/show", {project: foundProject});
+    //     }
+    // });
+    // render show template with that project
+    // res.send("This will be the show page one day...")
+    // res.render("show");
+});
 
 // EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.isAdmin, function(req, res){

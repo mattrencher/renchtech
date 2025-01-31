@@ -1,18 +1,19 @@
 import { Router } from "express";
 var router = Router();
 import Project from "../models/project.js";
+import Comment from "../models/comment.js";
 import middleware from "../middleware/index.js";
 
 // // INDEX - show all projects
 router.get("/", function(req, res){
     // Get all projects from DB
-    Project.find({}, function(err, allProjects){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("community/index",{projects:allProjects, currentUser: req.user, page: 'community'});
-        }
+    Project.find({})
+    .then(documents => {
+        // Do something with the found documents
+        res.render("community/index",{projects:documents, currentUser: req.user, page: 'community'});
+        // console.log(documents);
     });
+
 });
 
 // CREATE - add new project to DB
@@ -29,16 +30,20 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         id: req.user._id,
         username: req.user.username
     }
-    var newProject = {name: name, image: image, description: desc, video: vid, author: author};  // save form inputs to new object
+    var newProjectData = {name: name, image: image, description: desc, video: vid, author: author};  // save form inputs to new object
     // Create a new project and save to DB
-    Project.create(newProject, function(err, newlyCreated){
-        if(err){
-            console.log(err);
-        } else {
-            console.log(newlyCreated);
-            // redirect back to projects page
-            res.redirect("/community");
-        }
+    Project.create(newProjectData)
+    .then((newProject) => {
+        console.log(`Name: ${newProject.name}`);
+        // create a comment
+        Comment.create({
+            text: "This place is great",
+        });
+        res.redirect("/projects");
+    })
+    .catch((err) => {
+        console.log(err);
+        res.redirect("/projects");
     });
 });
 
@@ -50,29 +55,28 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 // SHOW - shows more info about one project
 router.get("/:id", function(req, res){
     // find the project with provided ID
-    Project.findById(req.params.id).populate("comments").exec(function(err, foundProject){
-        if(err || !foundProject){
-            console.log(err);
-            req.flash("error", "Project not found");
-            res.redirect("back");
-        } else {
-            console.log(foundProject);
-            // render show template with that project
-            res.render("community/show", {project: foundProject});
-        }
+    Project.findById(req.params.id).populate("comments")
+    .then((foundProject) => {
+        // console.log(foundProject);
+        // render show template with that project
+        res.render("community/show", {project: foundProject});
+    })
+    .catch((err) => {
+        console.log(err);
+        req.flash("error", "Project not found");
+        res.redirect("back");
     });
 });
 
 // EDIT PROJECT ROUTE
 router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res){
     //find the project with provided ID
-    Project.findById(req.params.id, function(err, foundProject){
-        if(err){
-            console.log(err);
-        } else {
-            //render show template with that project
-            res.render("community/edit", {project: foundProject});
-        }
+    Project.findById(req.params.id)
+    .then((foundProject) => {
+        res.render("community/edit", {project: foundProject});
+    })
+    .catch((err) => {
+        console.log(err);
     });
 });
 
@@ -86,23 +90,26 @@ router.put("/:id", middleware.checkProjectOwnership, function(req,res){
     var vid = video.replace("watch?v=", "embed/");
     var newProject = {name: name, image: image, description: desc, video: vid};  // save form inputs to new object
     // req.body.project.body = req.sanitize(req.body.project.body);
-    Project.findByIdAndUpdate(req.params.id, newProject, function(err, updatedProject){
-        if(err){
-            res.redirect("/community");
-        } else {
-            res.redirect("/community/" + req.params.id);
-        }
+    Project.findByIdAndUpdate(req.params.id, newProject)
+    .then((updatedProject) => {
+        res.redirect("/community/" + req.params.id);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.redirect("/community");
     });
 });
 
 // DESTORY PROJECT ROUTE
 router.delete("/:id", middleware.checkProjectOwnership, function(req, res){
-    Project.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            res.redirect("/community");
-        } else {
-            res.redirect("/community");
-        }
+    Project.findByIdAndRemove(req.params.id)
+    .then(() => {
+        req.flash("success", "Project deleted");
+        res.redirect("/community");
+    })
+    .catch((err) => {
+        console.log(err);
+        res.redirect("/community");
     });
 });
 

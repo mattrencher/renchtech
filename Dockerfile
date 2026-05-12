@@ -8,7 +8,9 @@ RUN apt-get update && \
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --omit=dev
+# Force sqlite3 to compile from source so it links against this container's glibc
+# instead of downloading a prebuilt binary built against a newer glibc
+RUN npm_config_build_from_source=true npm ci --omit=dev
 
 COPY . .
 

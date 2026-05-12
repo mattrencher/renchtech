@@ -1,24 +1,13 @@
-import { Schema, model } from "mongoose";
+import { DataTypes } from "sequelize";
+import sequelize from "./db.js";
 
-var projectSchema = new Schema({
-   name: String,
-   image: String,
-   description: String,
-   video: String,
-   createdAt: { type: Date, default: Date.now },
-   author: {
-      id: {
-         type: Schema.Types.ObjectId,
-         ref: "User"
-      },
-      username: String
-   },
-   comments: [
-      {
-         type: Schema.Types.ObjectId,
-         ref: "Comment"
-      }
-   ]
+const Project = sequelize.define("Project", {
+  name: { type: DataTypes.STRING },
+  image: { type: DataTypes.STRING },
+  description: { type: DataTypes.TEXT },
+  video: { type: DataTypes.STRING },
+  authorId: { type: DataTypes.INTEGER },
+  authorName: { type: DataTypes.STRING },
 });
 
-export default model("Project", projectSchema);
+export default Project;

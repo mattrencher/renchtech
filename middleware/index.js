@@ -5,90 +5,90 @@ import Comment from "../models/comment.js";
 import User from "../models/user.js";
 var middlewareObj = {};
 
-middlewareObj.checkProjectOwnership = function(req, res, next){
-  // is user logged in
-  if(req.isAuthenticated()){
-      Project.findById(req.params.id)
-      .then((foundProject) => {
-          if(foundProject.author.id.equals(req.user._id) || req.user.isAdmin){
-              next();
-          } else {
-              req.flash("error", "You don't have permission to do that");
-              res.redirect("back");
-          }
-      })
-      .catch((err) => {
-          req.flash("error", "Project not found");
-          res.redirect("back");
-      });
-  } else {
-      // console.log("YOU NEED TO BE LOGGED IN");
-      req.flash("error", "You need to be logged in to do that");
-      res.redirect("back");
-  }
-}
-
-middlewareObj.checkProfileOwnership = function(req, res, next){
-  // is user logged in
-  if(req.isAuthenticated()){
-      // does this user own the project?
-      User.findById(req.params.id, function(err, foundUser){
-      if(err || !foundUser){
-        req.flash("error", "Profile not found");
+middlewareObj.checkProjectOwnership = async function (req, res, next) {
+  if (req.isAuthenticated()) {
+    try {
+      const foundProject = await Project.findByPk(req.params.id);
+      if (!foundProject) {
+        req.flash("error", "Project not found");
+        return res.redirect("back");
+      }
+      if (foundProject.authorId === req.user.id || req.user.isAdmin) {
+        next();
+      } else {
+        req.flash("error", "You don't have permission to do that");
         res.redirect("back");
-      } else {
-        if(foundUser && foundUser._id.equals(req.user._id) || req.user.isAdmin){
-          next();
-        } else {
-          req.flash("error", "You don't have permission to do that")
-          res.redirect("back");
-        }
       }
-  });
-  } else {
-      // console.log("YOU NEED TO BE LOGGED IN");
-      req.flash("error", "You need to log in to edit your profile");
-      res.redirect("/community");
-  }
-}
-
-middlewareObj.checkCommentOwnership = function(req, res, next){
-   // is user logged in
-  if(req.isAuthenticated()){
-      Comment.findById(req.params.comment_id, function(err, foundComment){
-      if(err || !foundComment){
-        req.flash("error", "Comment not found");
-        res.redirect("back")
-      } else {
-          // does user own the comment?
-          if(foundComment.author.id.equals(req.user._id)){
-              next();
-          } else {
-              res.redirect("back");
-          }
-      }
-  });
-  } else {
-      // console.log("YOU NEED TO BE LOGGED IN");
+    } catch (err) {
+      req.flash("error", "Project not found");
       res.redirect("back");
-  }
-}
-
-middlewareObj.isLoggedIn = function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
     }
+  } else {
     req.flash("error", "You need to be logged in to do that");
-    res.redirect("/login");
-}
+    res.redirect("back");
+  }
+};
 
-middlewareObj.isAdmin = function isAdmin(req, res, next){
-  if(req.isAuthenticated() && req.user.isAdmin){
+middlewareObj.checkProfileOwnership = async function (req, res, next) {
+  if (req.isAuthenticated()) {
+    try {
+      const foundUser = await User.findByPk(req.params.id);
+      if (!foundUser) {
+        req.flash("error", "Profile not found");
+        return res.redirect("back");
+      }
+      if (foundUser.id === req.user.id || req.user.isAdmin) {
+        next();
+      } else {
+        req.flash("error", "You don't have permission to do that");
+        res.redirect("back");
+      }
+    } catch (err) {
+      req.flash("error", "Profile not found");
+      res.redirect("back");
+    }
+  } else {
+    req.flash("error", "You need to log in to edit your profile");
+    res.redirect("/community");
+  }
+};
+
+middlewareObj.checkCommentOwnership = async function (req, res, next) {
+  if (req.isAuthenticated()) {
+    try {
+      const foundComment = await Comment.findByPk(req.params.comment_id);
+      if (!foundComment) {
+        req.flash("error", "Comment not found");
+        return res.redirect("back");
+      }
+      if (foundComment.authorId === req.user.id || req.user.isAdmin) {
+        next();
+      } else {
+        res.redirect("back");
+      }
+    } catch (err) {
+      res.redirect("back");
+    }
+  } else {
+    res.redirect("back");
+  }
+};
+
+middlewareObj.isLoggedIn = function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error", "You need to be logged in to do that");
+  res.redirect("/login");
+};
+
+middlewareObj.isAdmin = function isAdmin(req, res, next) {
+  if (req.isAuthenticated() && req.user.isAdmin) {
     return next();
   } else {
-    req.flash("error", "You don't have permission to do that")
+    req.flash("error", "You don't have permission to do that");
     res.redirect("/projects");
   }
-}
+};
 
 export default middlewareObj;

@@ -1,19 +1,17 @@
-import { Schema, model } from "mongoose";
-import passportLocalMongoose from "passport-local-mongoose";
+import { DataTypes } from "sequelize";
+import sequelize from "./db.js";
 
-var UserSchema = new Schema({
-  username: String,
-  password: String,
-  firstName: String,
-  lastName: String,
-  avatar: String,
-  email: {type: String, unique: true, required: true},
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
-  bio: String,
-  isAdmin: { type: Boolean, default: false}
+const User = sequelize.define("User", {
+  username: { type: DataTypes.STRING, allowNull: false, unique: true },
+  password: { type: DataTypes.STRING, allowNull: false },
+  firstName: { type: DataTypes.STRING },
+  lastName: { type: DataTypes.STRING },
+  avatar: { type: DataTypes.STRING },
+  email: { type: DataTypes.STRING, allowNull: false, unique: true },
+  resetPasswordToken: { type: DataTypes.STRING },
+  resetPasswordExpires: { type: DataTypes.DATE },
+  bio: { type: DataTypes.TEXT },
+  isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
-UserSchema.plugin(passportLocalMongoose);
-
-export default model("User", UserSchema);
+export default User;

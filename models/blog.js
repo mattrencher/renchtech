@@ -1,24 +1,13 @@
-import { Schema, model } from "mongoose";
+import { DataTypes } from "sequelize";
+import sequelize from "./db.js";
 
-var blogSchema = new Schema({
-   name: String,
-   image: String,
-   body: String,
-   video: String,
-   createdAt: { type: Date, default: Date.now },
-   author: {
-      id: {
-         type: Schema.Types.ObjectId,
-         ref: "User"
-      },
-      username: String
-   },
-   comments: [
-      {
-         type: Schema.Types.ObjectId,
-         ref: "Comment"
-      }
-   ]
+const Blog = sequelize.define("Blog", {
+  name: { type: DataTypes.STRING },
+  image: { type: DataTypes.STRING },
+  body: { type: DataTypes.TEXT },
+  video: { type: DataTypes.STRING },
+  authorId: { type: DataTypes.INTEGER },
+  authorName: { type: DataTypes.STRING },
 });
 
-export default model("Blog", blogSchema);
+export default Blog;

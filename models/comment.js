@@ -1,15 +1,11 @@
-import { Schema, model } from "mongoose";
+import { DataTypes } from "sequelize";
+import sequelize from "./db.js";
 
-var commentSchema = new Schema({
-    text: String,
-    createdAt: { type: Date, default: Date.now },
-    author: {
-        id: {
-            type: Schema.Types.ObjectId,
-            ref: "User"
-        },
-        username: String
-    }
+const Comment = sequelize.define("Comment", {
+  text: { type: DataTypes.TEXT },
+  authorId: { type: DataTypes.INTEGER },
+  authorName: { type: DataTypes.STRING },
+  projectId: { type: DataTypes.INTEGER },
 });
- 
-export default model("Comment", commentSchema);
+
+export default Comment;
